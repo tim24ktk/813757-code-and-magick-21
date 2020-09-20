@@ -9,7 +9,7 @@ const FONT_GAP = 20;
 const FONT_HEIGHT = 20;
 const BAR_GAP = 50;
 const BAR_WIDTH = 40;
-const barHeight = CLOUD_HEIGHT - FONT_GAP - FONT_HEIGHT - GAP - FONT_HEIGHT - FONT_GAP - FONT_HEIGHT - GAP;
+const BAR_HEIGHT = CLOUD_HEIGHT - FONT_GAP - FONT_HEIGHT - GAP - FONT_HEIGHT - FONT_GAP - FONT_HEIGHT - GAP;
 
 const renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -20,17 +20,17 @@ const renderCloud = function (ctx, x, y, color) {
   ctx.font = `"PT Mono" 16px`;
 };
 
-const getMaxElement = function (arr) {
-  let maxElement = arr[0];
-  for (let i = 1; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
+const getMaxElement = function (elements) {
+  let maxElement = elements[0];
+  for (let i = 1; i < elements.length; i++) {
+    if (elements[i] > maxElement) {
+      maxElement = elements[i];
     }
   }
   return maxElement;
 };
 
-const getRandom = function (min = 0, max = 100) {
+const getRandomNumber = function (min = 0, max = 100) {
   return Math.random() * (max - min) - min;
 };
 
@@ -43,24 +43,20 @@ window.renderStatistics = function (ctx, players, times) {
 
   for (let i = 0; i < players.length; i++) {
 
-    if (players[i] === `Вы`) {
-      ctx.fillStyle = `rgba(255, 0, 0, 1)`;
-    } else {
-      ctx.fillStyle = `hsl(240, 100%, ` + getRandom() + `%)`;
-    }
+    ctx.fillStyle = players[i] === `Вы` ? `rgba(255, 0, 0, 1)` : `hsl(240, 100%, ` + getRandomNumber() + `%)`;
 
     ctx.fillRect(
         CLOUD_X + BAR_WIDTH + (BAR_GAP + BAR_WIDTH) * i,
         CLOUD_HEIGHT - FONT_GAP,
         BAR_WIDTH,
-        (-barHeight * times[i]) / maxTime
+        (-BAR_HEIGHT * times[i]) / maxTime
     );
 
     ctx.fillStyle = `#000000`;
     ctx.fillText(
         Math.round(times[i]),
         CLOUD_X + BAR_WIDTH + (BAR_GAP + BAR_WIDTH) * i,
-        CLOUD_HEIGHT - (barHeight * times[i]) / maxTime - FONT_GAP - GAP
+        CLOUD_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime - FONT_GAP - GAP
     );
 
     ctx.fillText(
