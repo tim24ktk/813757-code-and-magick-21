@@ -31,7 +31,7 @@ const getMaxElement = function (elements) {
 };
 
 const getRandomNumber = function (min = 0, max = 100) {
-  return Math.random() * (max - min) - min;
+  return Math.random() * (max - min) + min;
 };
 
 window.renderStatistics = function (ctx, players, times) {
